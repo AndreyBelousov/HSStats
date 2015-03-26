@@ -1,0 +1,66 @@
+﻿@model HSStats.Models.Match
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Match</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Mode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MyHero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MyHero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpponentHero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpponentHero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Turn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Turn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Result)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Result)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MatchTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MatchTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MatchID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

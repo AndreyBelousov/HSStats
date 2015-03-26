@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HSStats.Models.Match>
+
+@{
+    ViewBag.Title = "List of matches";
+}
+
+<h2>List of matches</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.Action("Search", "Match")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Mode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MyHero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpponentHero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Turn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Result)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MatchTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MyHero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpponentHero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Turn)        
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Result)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatchTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MatchID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MatchID })
+        </td>
+    </tr>
+}
+
+</table>

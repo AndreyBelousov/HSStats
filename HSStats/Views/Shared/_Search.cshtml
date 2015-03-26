@@ -1,0 +1,11 @@
+﻿@model HSStats.Models.Match
+
+@using ( Html.BeginForm("Index", "Match"))
+{
+    @Html.EnumDropDownListFor(model => model.Mode, "Mode")
+    @Html.EnumDropDownListFor(model => model.MyHero, "AS")
+    @Html.EnumDropDownListFor(model => model.OpponentHero, "VS")
+    @Html.EnumDropDownListFor(model => model.Turn, "Your Turn")
+    @Html.EnumDropDownListFor(model => model.Result, "Result")
+    <input type="submit" value="Filter" />
+}

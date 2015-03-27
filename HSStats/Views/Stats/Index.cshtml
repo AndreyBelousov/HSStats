@@ -1,10 +1,79 @@
-﻿
+﻿@model HSStats.Models.StatsViewModel
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Total Stats";
 }
 
-<h2>Stats</h2>
-<p>Total wins: @ViewBag.TotalWins</p>
-<p>Total defeats: @ViewBag.TotalDefeats</p>
-<p>Total draws: @ViewBag.TotalDraws</p>
+<h2>Total Stats</h2>
 
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalMatches)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalWins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalDefeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalDraws)
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.TotalMatches)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TotalWins)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TotalDefeats)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TotalDraws)
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Heroes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HeroesMatches)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HeroesWins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HeroesDefeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WinPercentages)
+        </th>
+    </tr>
+    @for ( int i = 0; i < Enum.GetNames(typeof(HSStats.Models.Heroes)).Length; i++ )
+    {
+        <tr>
+            <td>
+                @((HSStats.Models.Heroes)i)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HeroesMatches[i])
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HeroesWins[i])
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HeroesDefeats[i])
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.WinPercentages[i])
+            </td>
+        </tr>
+    }
+</table>

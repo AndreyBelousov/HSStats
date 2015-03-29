@@ -44,7 +44,7 @@ namespace HSStats.Controllers
                 matches = matches.Where(r => r.Result == result);
             }
 
-            return View(matches);
+            return View(matches.OrderByDescending(m => m.MatchTime));
         }
 
         // GET: /Match/Details/5

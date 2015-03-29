@@ -1,0 +1,22 @@
+﻿@model HSStats.Models.ShortStatsViewModel
+
+<h2>Total Stats</h2>
+
+@for ( int i = 0; i < Enum.GetNames(typeof(HSStats.Models.Modes)).Length + 1; i++ )
+{
+    <p>
+        @if(i>0)
+        { 
+            @((HSStats.Models.Modes)i-1) @: :
+        }
+        else
+        {
+            @:Total
+        }
+        @Html.DisplayFor(model => model.MatchesByMode[i])   =
+        @Html.DisplayFor(model => model.WinsByMode[i])  /
+        @Html.DisplayFor(model => model.DefeatsByMode[i])   (
+        @Html.DisplayFor(model => model.WinPercentageByMode[i])%) 
+    </p>
+
+}

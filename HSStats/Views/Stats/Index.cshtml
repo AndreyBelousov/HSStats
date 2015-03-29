@@ -1,42 +1,10 @@
 ﻿@model HSStats.Models.StatsViewModel
 
 @{
-    ViewBag.Title = "Total Stats";
+    ViewBag.Title = "Stats";
 }
 
-<h2>Total Stats</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalMatches)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalWins)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalDefeats)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalDraws)
-        </th>
-    </tr>
-
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.TotalMatches)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.TotalWins)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.TotalDefeats)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.TotalDraws)
-        </td>
-    </tr>
-</table>
+<h2>Stats</h2>
 
 @Html.Action("Filter", "Stats")
 

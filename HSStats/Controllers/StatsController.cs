@@ -16,11 +16,7 @@ namespace HSStats.Controllers
         public ActionResult Index(Modes? mode, Heroes? myHero)
         {
             StatsViewModel statsVM = new StatsViewModel();
-            statsVM.TotalMatches = db.Matches.Count();
-            statsVM.TotalWins = db.Matches.Where(m => m.Result == Results.Win).Count();
-            statsVM.TotalDefeats = db.Matches.Where(m => m.Result == Results.Defeat).Count();
-            statsVM.TotalDraws = db.Matches.Where(m => m.Result == Results.Draw).Count();
-
+            
             statsVM.HeroesMatches = new int[Enum.GetNames(typeof(Heroes)).Length];
             statsVM.HeroesWins = new int[Enum.GetNames(typeof(Heroes)).Length];
             statsVM.HeroesDefeats = new int[Enum.GetNames(typeof(Heroes)).Length];
@@ -86,6 +82,35 @@ namespace HSStats.Controllers
         public ActionResult Filter(Match match)
         {
             return PartialView("_Filter", match);
+        }
+
+        [ChildActionOnly]
+        public ActionResult ShortStats()
+        {
+            ShortStatsViewModel shortStatsVM = new ShortStatsViewModel();
+
+            shortStatsVM.MatchesByMode = new int[Enum.GetNames(typeof(Modes)).Length+1];
+            shortStatsVM.WinsByMode = new int[Enum.GetNames(typeof(Modes)).Length+1];
+            shortStatsVM.DefeatsByMode = new int[Enum.GetNames(typeof(Modes)).Length+1];
+            shortStatsVM.WinPercentageByMode = new double[Enum.GetNames(typeof(Modes)).Length+1];
+
+            shortStatsVM.MatchesByMode[0] = db.Matches.Count();
+            shortStatsVM.WinsByMode[0] = db.Matches.Where(m => m.Result == Results.Win).Count();
+            shortStatsVM.DefeatsByMode[0] = db.Matches.Where(m => m.Result == Results.Defeat).Count();
+            shortStatsVM.WinPercentageByMode[0] = Math.Round((double)shortStatsVM.WinsByMode[0] / ( shortStatsVM.WinsByMode[0] + shortStatsVM.DefeatsByMode[0] ) * 100, 2);
+
+            for ( int i = 1; i < Enum.GetNames(typeof(Modes)).Length+1; i++ )
+            {
+                shortStatsVM.MatchesByMode[i] = db.Matches.Where(m => m.Mode == (Modes)i-1).Count();
+                shortStatsVM.WinsByMode[i] = db.Matches.Where(m => m.Mode == (Modes)i-1 && m.Result == Results.Win).Count();
+                shortStatsVM.DefeatsByMode[i] = db.Matches.Where(m => m.Mode == (Modes)i-1 && m.Result == Results.Defeat).Count();
+                if(shortStatsVM.WinsByMode[i] != 0)
+                {
+                    shortStatsVM.WinPercentageByMode[i] = Math.Round((double)shortStatsVM.WinsByMode[i] / ( shortStatsVM.WinsByMode[i] + shortStatsVM.DefeatsByMode[i] ) * 100, 2);
+                }
+            }
+            
+            return PartialView("_ShortStats", shortStatsVM);
         }
 	}
 }

@@ -3,6 +3,7 @@
 @using(Html.BeginForm("Index", "Stats"))
 {
     @Html.EnumDropDownListFor(model => model.Mode, "Mode")
-    @Html.EnumDropDownListFor(model => model.MyHero, "My Hero")
+    @Html.EnumDropDownListFor(model => model.MyHero, "AS")
+    @Html.EnumDropDownListFor(model => model.Turn, "Your turn")
     <input type="submit" value="Filter" />
 }

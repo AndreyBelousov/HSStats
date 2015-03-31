@@ -13,7 +13,7 @@ namespace HSStats.Controllers
 
         //
         // GET: /Stats/
-        public ActionResult Index(Modes? mode, Heroes? myHero)
+        public ActionResult Index(Modes? mode, Heroes? myHero, Turns? turn)
         {
             StatsViewModel statsVM = new StatsViewModel();
             
@@ -21,40 +21,27 @@ namespace HSStats.Controllers
             statsVM.HeroesWins = new int[Enum.GetNames(typeof(Heroes)).Length];
             statsVM.HeroesDefeats = new int[Enum.GetNames(typeof(Heroes)).Length];
             statsVM.WinPercentages = new double[Enum.GetNames(typeof(Heroes)).Length];
+            List<Match> matches = db.Matches.ToList();
 
-            if ( mode != null && myHero != null)
+            if ( mode != null )
             {
-                for ( int i = 0; i < Enum.GetNames(typeof(Heroes)).Length; i++ )
-                {
-                    statsVM.HeroesMatches[i] = db.Matches.Where(m => m.MyHero == myHero && m.OpponentHero == (Heroes)i && m.Mode == mode).Count();
-                    statsVM.HeroesWins[i] = db.Matches.Where(m => m.MyHero == myHero && m.OpponentHero == (Heroes)i && m.Result == Results.Win && m.Mode == mode).Count();
-                    statsVM.HeroesDefeats[i] = db.Matches.Where(m => m.MyHero == myHero && m.OpponentHero == (Heroes)i && m.Result == Results.Defeat && m.Mode == mode).Count();
-                    if ( statsVM.HeroesWins[i] != 0 )
-                    {
-                        statsVM.WinPercentages[i] = Math.Round((double)statsVM.HeroesWins[i] / ( statsVM.HeroesWins[i] + statsVM.HeroesDefeats[i] ) * 100, 2);
-                    }
-                }
+                matches = matches.Where(m => m.Mode == mode).Select(m => m).ToList();
             }
-            else if(mode != null)
+
+            if (turn != null)
             {
-                for ( int i = 0; i < Enum.GetNames(typeof(Heroes)).Length; i++ )
-                {
-                    statsVM.HeroesMatches[i] = db.Matches.Where(m => m.MyHero == (Heroes)i && m.Mode == mode).Count();
-                    statsVM.HeroesWins[i] = db.Matches.Where(m => m.MyHero == (Heroes)i && m.Result == Results.Win && m.Mode == mode).Count();
-                    statsVM.HeroesDefeats[i] = db.Matches.Where(m => m.MyHero == (Heroes)i && m.Result == Results.Defeat && m.Mode == mode).Count();
-                    if ( statsVM.HeroesWins[i] != 0 )
-                    {
-                        statsVM.WinPercentages[i] = Math.Round((double)statsVM.HeroesWins[i] / ( statsVM.HeroesWins[i] + statsVM.HeroesDefeats[i] ) * 100, 2);
-                    }
-                }
+                matches = matches.Where(m => m.Turn == turn).Select(m => m).ToList();
             }
-            else if(myHero != null)
+
+            if (myHero != null)
             {
+                matches = matches.Where(m => m.MyHero == myHero).Select(m => m).ToList();
+
                 for ( int i = 0; i < Enum.GetNames(typeof(Heroes)).Length; i++ )
                 {
-                    statsVM.HeroesMatches[i] = db.Matches.Where(m => m.MyHero == myHero && m.OpponentHero == (Heroes)i).Count();
-                    statsVM.HeroesWins[i] = db.Matches.Where(m => m.MyHero == myHero && m.OpponentHero == (Heroes)i && m.Result == Results.Win).Count();
-                    statsVM.HeroesDefeats[i] = db.Matches.Where(m => m.MyHero == myHero && m.OpponentHero == (Heroes)i && m.Result == Results.Defeat).Count();
+                    statsVM.HeroesMatches[i] = matches.Where(m => m.OpponentHero == (Heroes)i).Count();
+                    statsVM.HeroesWins[i] = matches.Where(m => m.OpponentHero == (Heroes)i && m.Result == Results.Win).Count();
+                    statsVM.HeroesDefeats[i] = matches.Where(m => m.OpponentHero == (Heroes)i && m.Result == Results.Defeat).Count();
                     if ( statsVM.HeroesWins[i] != 0 )
                     {
                         statsVM.WinPercentages[i] = Math.Round((double)statsVM.HeroesWins[i] / ( statsVM.HeroesWins[i] + statsVM.HeroesDefeats[i] ) * 100, 2);
@@ -65,15 +52,15 @@ namespace HSStats.Controllers
             {
                 for ( int i = 0; i < Enum.GetNames(typeof(Heroes)).Length; i++ )
                 {
-                    statsVM.HeroesMatches[i] = db.Matches.Where(m => m.MyHero == (Heroes)i).Count();
-                    statsVM.HeroesWins[i] = db.Matches.Where(m => m.MyHero == (Heroes)i && m.Result == Results.Win).Count();
-                    statsVM.HeroesDefeats[i] = db.Matches.Where(m => m.MyHero == (Heroes)i && m.Result == Results.Defeat).Count();
+                    statsVM.HeroesMatches[i] = matches.Where(m => m.MyHero == (Heroes)i).Count();
+                    statsVM.HeroesWins[i] = matches.Where(m => m.MyHero == (Heroes)i && m.Result == Results.Win).Count();
+                    statsVM.HeroesDefeats[i] = matches.Where(m => m.MyHero == (Heroes)i && m.Result == Results.Defeat).Count();
                     if ( statsVM.HeroesWins[i] != 0 )
                     {
                         statsVM.WinPercentages[i] = Math.Round((double)statsVM.HeroesWins[i] / ( statsVM.HeroesWins[i] + statsVM.HeroesDefeats[i] ) * 100, 2);
                     }
                 }
-            }
+            }            
 
             return View(statsVM);
         }

@@ -8,7 +8,7 @@
 
 @Html.Action("Filter", "Stats")
 
-<table class="table">
+<table class="table-bordered text-center">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Heroes)
@@ -42,7 +42,7 @@
                 @Html.DisplayFor(model => model.HeroesDefeats[i])
             </td>
             <td>
-                @Html.DisplayFor(model => model.WinPercentages[i])
+                @Html.DisplayFor(model => model.WinPercentages[i])%
             </td>
         </tr>
     }

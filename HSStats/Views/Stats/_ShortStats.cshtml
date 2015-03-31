@@ -2,21 +2,39 @@
 
 <h2>Total Stats</h2>
 
-@for ( int i = 0; i < Enum.GetNames(typeof(HSStats.Models.Modes)).Length + 1; i++ )
-{
-    <p>
-        @if(i>0)
-        { 
-            @((HSStats.Models.Modes)i-1) @: :
-        }
-        else
-        {
-            @:Total
-        }
-        @Html.DisplayFor(model => model.MatchesByMode[i])   =
-        @Html.DisplayFor(model => model.WinsByMode[i])  /
-        @Html.DisplayFor(model => model.DefeatsByMode[i])   (
-        @Html.DisplayFor(model => model.WinPercentageByMode[i])%) 
-    </p>
-
-}
+<table class="table-bordered text-center">
+    <tr>
+        <th>Mode</th>
+        <th>Matches</th>
+        <th>Wins</th>
+        <th>Defeats</th>
+        <th>Win %</th>
+    </tr>
+    @for ( int i = 0; i < Enum.GetNames(typeof(HSStats.Models.Modes)).Length + 1; i++ )
+    {
+        <tr>
+            <td>
+                @if ( i > 0 )
+                {
+                    @((HSStats.Models.Modes)i - 1)
+                }
+                else
+                {
+                    @:Total
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.MatchesByMode[i])
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.WinsByMode[i])
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.DefeatsByMode[i])
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.WinPercentageByMode[i])%
+            </td>
+        </tr>
+    }
+</table>

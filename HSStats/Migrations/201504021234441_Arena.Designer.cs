@@ -7,13 +7,13 @@ namespace HSStats.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class Nullable : IMigrationMetadata
+    public sealed partial class Arena : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Nullable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Arena));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503250847097_Nullable"; }
+            get { return "201504021234441_Arena"; }
         }
         
         string IMigrationMetadata.Source

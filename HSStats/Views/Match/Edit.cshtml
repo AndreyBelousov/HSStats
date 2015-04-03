@@ -17,14 +17,18 @@
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.MatchID)
         @Html.HiddenFor(model => model.MatchTime)
+        @Html.HiddenFor(model => model.ArenaID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Mode)
-                @Html.ValidationMessageFor(model => model.Mode)
+        @if(Model.Mode != HSStats.Models.Modes.Arena)
+        { 
+            <div class="form-group">
+                @Html.LabelFor(model => model.Mode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.Mode)
+                    @Html.ValidationMessageFor(model => model.Mode)
+                </div>
             </div>
-        </div>
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.MyHero, new { @class = "control-label col-md-2" })

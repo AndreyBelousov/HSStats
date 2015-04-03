@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -32,11 +31,8 @@ namespace HSStats.Models
 
         [Display(Name = "Time of the match")]        
         public DateTime MatchTime { get; set; }
-    }
 
-    public class HSStatsDbContext : DbContext
-    {
-        public DbSet<Match> Matches { get; set; }
+        public int? ArenaID { get; set; }
     }
 
     public enum Heroes : byte { Druid, Hunter, Mage, Paladin, Priest, Rogue, Shaman, Warlock, Warrior };

@@ -73,7 +73,7 @@ namespace HSStats.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime")] Match match)
+        public ActionResult Create([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime,ArenaID")] Match match)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace HSStats.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime")] Match match)
+        public ActionResult Edit([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime,ArenaID")] Match match)
         {
             if (ModelState.IsValid)
             {                

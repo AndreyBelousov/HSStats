@@ -1,0 +1,67 @@
+﻿@model IEnumerable<HSStats.Models.Arena>
+
+@{
+    ViewBag.Title = "Arenas";
+}
+
+<h2>List of the arenas</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Hero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Defeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gold)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dust)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Hero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wins)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Defeats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gold)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dust)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @if(item.Wins < 12 && item.Defeats <3 )
+            { 
+                @Html.ActionLink("Add match", "AddMatch", new { id = item.ArenaID, myHero = item.Hero }) @:|
+            }                                                                                         
+            @Html.ActionLink("Edit", "Edit", new { id=item.ArenaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ArenaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ArenaID })
+        </td>
+    </tr>
+}
+
+</table>

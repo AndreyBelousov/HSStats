@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArenaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\StatsController.cs" />
@@ -169,16 +170,18 @@
     <Compile Include="Migrations\201503191110250_Initial.Designer.cs">
       <DependentUpon>201503191110250_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503250847097_Nullable.cs" />
-    <Compile Include="Migrations\201503250847097_Nullable.Designer.cs">
-      <DependentUpon>201503250847097_Nullable.cs</DependentUpon>
+    <Compile Include="Migrations\201504021234441_Arena.cs" />
+    <Compile Include="Migrations\201504021234441_Arena.Designer.cs">
+      <DependentUpon>201504021234441_Arena.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Arena.cs" />
+    <Compile Include="Models\HSStatsDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
-    <Compile Include="Models\TotalStatsViewModel.cs" />
+    <Compile Include="Models\ShortStatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -592,6 +595,9 @@
     <Content Include="Views\Match\_Search.cshtml" />
     <Content Include="Views\Stats\_Filter.cshtml" />
     <Content Include="Views\Stats\_ShortStats.cshtml" />
+    <Content Include="Views\Arena\Index.cshtml" />
+    <Content Include="Views\Arena\Create.cshtml" />
+    <Content Include="Views\Arena\AddMatch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -607,8 +613,8 @@
     <EmbeddedResource Include="Migrations\201503191110250_Initial.resx">
       <DependentUpon>201503191110250_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503250847097_Nullable.resx">
-      <DependentUpon>201503250847097_Nullable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504021234441_Arena.resx">
+      <DependentUpon>201504021234441_Arena.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

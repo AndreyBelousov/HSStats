@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HSStats.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace HSStats.Controllers
 {
@@ -15,9 +16,14 @@ namespace HSStats.Controllers
         private HSStatsDbContext db = new HSStatsDbContext();
 
         // GET: /Match/
-        public ActionResult Index(Modes? mode, Heroes? myHero, Heroes? opponentHero, Turns? turn, Results? result)
+        public ActionResult Index(Modes? mode, Heroes? myHero, Heroes? opponentHero, Turns? turn, Results? result, int? arenaID)
         {
             var matches = from m in db.Matches select m;
+
+            if(arenaID != null)
+            {
+                matches = matches.Where(m => m.ArenaID == arenaID);
+            }
 
             if(mode != null)
             {
@@ -109,7 +115,24 @@ namespace HSStats.Controllers
         public ActionResult Edit([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime,ArenaID")] Match match)
         {
             if (ModelState.IsValid)
-            {                
+            {
+                Match original = db.Matches.Where(m => m.MatchID == match.MatchID).Select(m => m).Single();
+                if(match.ArenaID != null && match.Result != original.Result)
+                {      
+                    var arena = db.Arenas.Where(m => m.ArenaID == match.ArenaID).Select(m => m).Single();
+                    if ( match.Result == Results.Win )
+                    {
+                        arena.Wins = arena.Wins + 1;
+                        arena.Defeats = arena.Defeats - 1;
+                    }
+                    if ( match.Result == Results.Defeat )
+                    {
+                        arena.Defeats = arena.Defeats + 1;
+                        arena.Wins = arena.Wins - 1;
+                    }
+                    db.SaveChanges();
+                }
+                ( (IObjectContextAdapter)db ).ObjectContext.Detach(original);
                 db.Entry(match).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -598,6 +598,10 @@
     <Content Include="Views\Arena\Index.cshtml" />
     <Content Include="Views\Arena\Create.cshtml" />
     <Content Include="Views\Arena\AddMatch.cshtml" />
+    <Content Include="Views\Arena\AddRewards.cshtml" />
+    <Content Include="Views\Arena\Delete.cshtml" />
+    <Content Include="Views\Arena\Details.cshtml" />
+    <Content Include="Views\Arena\_ListOfMatches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

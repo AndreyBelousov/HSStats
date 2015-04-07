@@ -83,7 +83,11 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") |
+    @if ( Model.ArenaID != null )
+    {
+        @Html.ActionLink("Back to arena details", "Details", "Arena", new { id = Model.ArenaID }, null)
+    }
 </div>
 
 @section Scripts {

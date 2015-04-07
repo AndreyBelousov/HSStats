@@ -4,11 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Match details</h2>
 
 <div>
-    <h4>Match</h4>
-	<hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Mode)
@@ -62,5 +60,9 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.MatchID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") |
+    @if(Model.ArenaID != null)
+    {
+        @Html.ActionLink("Back to arena details", "Details", "Arena", new { id = Model.ArenaID }, null)
+    }
 </p>

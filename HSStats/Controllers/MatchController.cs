@@ -116,23 +116,26 @@ namespace HSStats.Controllers
         {
             if (ModelState.IsValid)
             {
-                Match original = db.Matches.Where(m => m.MatchID == match.MatchID).Select(m => m).Single();
-                if(match.ArenaID != null && match.Result != original.Result)
-                {      
-                    var arena = db.Arenas.Where(m => m.ArenaID == match.ArenaID).Select(m => m).Single();
-                    if ( match.Result == Results.Win )
+                
+                if(match.ArenaID != null)
+                {
+                    Match original = db.Matches.Find(match.MatchID);
+                    if ( match.Result != original.Result )
                     {
-                        arena.Wins = arena.Wins + 1;
-                        arena.Defeats = arena.Defeats - 1;
+                        Arena arena = db.Arenas.Find(match.ArenaID);
+                        if ( match.Result == Results.Win )
+                        {
+                            arena.Wins = arena.Wins + 1;
+                            arena.Defeats = arena.Defeats - 1;
+                        }
+                        if ( match.Result == Results.Defeat )
+                        {
+                            arena.Defeats = arena.Defeats + 1;
+                            arena.Wins = arena.Wins - 1;
+                        }                                               
                     }
-                    if ( match.Result == Results.Defeat )
-                    {
-                        arena.Defeats = arena.Defeats + 1;
-                        arena.Wins = arena.Wins - 1;
-                    }
-                    db.SaveChanges();
-                }
-                ( (IObjectContextAdapter)db ).ObjectContext.Detach(original);
+                    ((IObjectContextAdapter)db).ObjectContext.Detach(original);
+                }                
                 db.Entry(match).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -161,9 +164,28 @@ namespace HSStats.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Match match = db.Matches.Find(id);
+            if(match.ArenaID != null)
+            {
+                Arena arena = db.Arenas.Find(match.ArenaID);
+                if(match.Result == Results.Win)
+                {
+                    arena.Wins = arena.Wins - 1;
+                }
+                else if(match.Result == Results.Defeat)
+                {
+                    arena.Defeats = arena.Defeats - 1;
+                }
+            }
             db.Matches.Remove(match);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if(match.ArenaID == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Arena");
+            }
         }
 
         protected override void Dispose(bool disposing)

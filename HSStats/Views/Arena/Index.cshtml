@@ -56,8 +56,11 @@
             @if(item.Wins < 12 && item.Defeats <3 )
             { 
                 @Html.ActionLink("Add match", "AddMatch", new { id = item.ArenaID, myHero = item.Hero }) @:|
-            }                                                                                         
-            @Html.ActionLink("Edit", "Edit", new { id=item.ArenaID }) |
+            }
+            else
+            {
+                @Html.ActionLink("Edit rewards", "AddRewards", new { id = item.ArenaID}) @:|
+            }                                                                                                     
             @Html.ActionLink("Details", "Details", new { id=item.ArenaID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ArenaID })
         </td>

@@ -1,0 +1,57 @@
+﻿@model HSStats.Models.Arena
+
+@{
+    ViewBag.Title = "Rewards";
+}
+
+<h2>Add or change Rewards</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Arena</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ArenaID)
+        @Html.HiddenFor(model => model.Hero)
+        @Html.HiddenFor(model => model.Wins)
+        @Html.HiddenFor(model => model.Defeats)
+        @Html.HiddenFor(model => model.StartDate)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gold, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Gold)
+                @Html.ValidationMessageFor(model => model.Gold)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dust, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Dust)
+                @Html.ValidationMessageFor(model => model.Dust)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Notes)
+                @Html.ValidationMessageFor(model => model.Notes)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

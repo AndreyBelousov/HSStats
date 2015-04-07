@@ -1,0 +1,80 @@
+﻿@model HSStats.Models.Arena
+
+@{
+    ViewBag.Title = "Arena details";
+}
+
+<h2>Arena details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Hero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Wins)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Wins)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Defeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Defeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gold)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dust)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dust)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+    </dl>
+
+    <h2>List of matches</h2>
+    <p>
+        @if ( Model.Wins < 12 && Model.Defeats < 3 )
+        {
+            @Html.ActionLink("Add match", "AddMatch", new { id = Model.ArenaID, myHero = Model.Hero })
+        }
+    </p>
+    @Html.Action("ListOfMatches", "Arena")
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

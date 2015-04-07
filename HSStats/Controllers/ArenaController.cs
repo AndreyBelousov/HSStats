@@ -52,7 +52,7 @@ namespace HSStats.Controllers
         {
             if(ModelState.IsValid)
             {
-                var arena = db.Arenas.Where(m => m.ArenaID == match.ArenaID).Select(m => m).Single();
+                Arena arena = db.Arenas.Find(match.ArenaID);
                 if ( match.Result == Results.Win )
                 {                    
                     arena.Wins = arena.Wins+1;
@@ -68,5 +68,90 @@ namespace HSStats.Controllers
             }
             return View(match);
         }
+
+        public ActionResult AddRewards(int? id)
+        {
+            if ( id == null )
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Arena arena = db.Arenas.Find(id);
+            if ( arena == null )
+            {
+                return HttpNotFound();
+            }
+            return View(arena);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRewards(Arena arena)
+        {
+            if(ModelState.IsValid)
+            {
+                db.Entry(arena).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(arena);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if ( id == null )
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Arena arena = db.Arenas.Find(id);            
+            if ( arena == null )
+            {
+                return HttpNotFound();
+            }
+            return View(arena);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Arena arena = db.Arenas.Find(id);            
+            db.Arenas.Remove(arena);
+            foreach (var match in db.Matches.Where(m=>m.ArenaID == id).Select(m => m))
+            {
+                db.Matches.Remove(match);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if ( id == null )
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Arena arena = db.Arenas.Find(id);            
+            if ( arena == null )
+            {
+                return HttpNotFound();
+            }
+            return View(arena);
+        }
+
+        [ChildActionOnly]
+        public ActionResult ListOfMatches(int? id)
+        {
+            if ( id == null )
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var matches = db.Matches.Where(m => m.ArenaID == id).Select(m => m);
+            if(matches == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_ListOfMatches", matches);
+        }
+
 	}
 }

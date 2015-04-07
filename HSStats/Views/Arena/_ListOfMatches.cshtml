@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HSStats.Models.Match>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OpponentHero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Turn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Result)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MatchTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpponentHero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Turn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Result)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatchTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Match", new { id=item.MatchID }, null) |            
+            @Html.ActionLink("Details", "Details", "Match", new { id=item.MatchID }, null) |
+            @Html.ActionLink("Delete", "Delete", "Match", new { id=item.MatchID }, null)
+        </td>
+    </tr>
+}
+
+</table>

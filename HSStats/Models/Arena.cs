@@ -20,15 +20,18 @@ namespace HSStats.Models
         [Range(0,3)]
         public int Defeats { get; set; }
 
+        [Range(0, int.MaxValue)]
         [Display(Name="Gold earned")]
         public int Gold { get; set; }
 
+        [Range(0, int.MaxValue)]
         [Display(Name="Dust earned")]
         public int Dust { get; set; }
 
         [Display(Name = "Arena was started at")]
         public DateTime StartDate { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
     }
 }

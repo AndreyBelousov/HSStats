@@ -93,7 +93,7 @@ namespace HSStats.Controllers
         }
 
         // GET: /Match/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -104,6 +104,7 @@ namespace HSStats.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ReturnUrl = returnUrl;
             return View(match);
         }
 
@@ -112,39 +113,53 @@ namespace HSStats.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime,ArenaID")] Match match)
+        public ActionResult Edit([Bind(Include="MatchID,Mode,MyHero,OpponentHero,Turn,Result,MatchTime,ArenaID")] Match match, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                
                 if(match.ArenaID != null)
                 {
                     Match original = db.Matches.Find(match.MatchID);
                     if ( match.Result != original.Result )
                     {
                         Arena arena = db.Arenas.Find(match.ArenaID);
-                        if ( match.Result == Results.Win )
+                        if ( match.Result == Results.Win && arena.Wins < 12)
                         {
                             arena.Wins = arena.Wins + 1;
                             arena.Defeats = arena.Defeats - 1;
                         }
-                        if ( match.Result == Results.Defeat )
+                        else if ( match.Result == Results.Win && arena.Wins > 11 )
+                        {
+                            ViewBag.Message = "Number of wins on the single arena can't be more than 12.";
+                            return View(match);
+                        }
+
+                        if ( match.Result == Results.Defeat && arena.Defeats < 3)
                         {
                             arena.Defeats = arena.Defeats + 1;
                             arena.Wins = arena.Wins - 1;
-                        }                                               
+                        }
+                        else if ( match.Result == Results.Defeat && arena.Defeats > 2 )
+                        {
+                            ViewBag.Message = "Number of defeats on the single arena can't be more than 3.";
+                            return View(match);
+                        }
                     }
                     ((IObjectContextAdapter)db).ObjectContext.Detach(original);
                 }                
                 db.Entry(match).State = EntityState.Modified;
                 db.SaveChanges();
+                if ( returnUrl != null )
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Index");
             }
             return View(match);
         }
 
         // GET: /Match/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -155,13 +170,14 @@ namespace HSStats.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ReturnUrl = returnUrl;
             return View(match);
         }
 
         // POST: /Match/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string returnUrl)
         {
             Match match = db.Matches.Find(id);
             if(match.ArenaID != null)
@@ -178,14 +194,13 @@ namespace HSStats.Controllers
             }
             db.Matches.Remove(match);
             db.SaveChanges();
-            if(match.ArenaID == null)
+            
+            if ( returnUrl != null )
             {
-                return RedirectToAction("Index");
+                return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Arena");
-            }
+
+            return RedirectToAction("Index");            
         }
 
         protected override void Dispose(bool disposing)

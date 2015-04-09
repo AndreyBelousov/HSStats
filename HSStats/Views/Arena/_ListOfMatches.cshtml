@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<HSStats.Models.Match>
+
+<h3>List of matches on this arena</h3>
 <table class="table">
     <tr>
         <th>
@@ -31,9 +33,9 @@
             @Html.DisplayFor(modelItem => item.MatchTime)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", "Match", new { id=item.MatchID }, null) |            
-            @Html.ActionLink("Details", "Details", "Match", new { id=item.MatchID }, null) |
-            @Html.ActionLink("Delete", "Delete", "Match", new { id=item.MatchID }, null)
+            @Html.ActionLink("Edit", "Edit", "Match", new { id=item.MatchID, ReturnUrl = Request.Url.PathAndQuery }, null) |            
+            @Html.ActionLink("Details", "Details", "Match", new { id = item.MatchID }, null) |
+            @Html.ActionLink("Delete", "Delete", "Match", new { id = item.MatchID, ReturnUrl = Request.Url.PathAndQuery }, null)
         </td>
     </tr>
 }

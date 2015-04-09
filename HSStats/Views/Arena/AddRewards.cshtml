@@ -1,18 +1,16 @@
 ﻿@model HSStats.Models.Arena
 
 @{
-    ViewBag.Title = "Rewards";
+    ViewBag.Title = "Edit rewards";
 }
 
-<h2>Add or change Rewards</h2>
+<h2>Add or change rewards</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Arena</h4>
-        <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ArenaID)
         @Html.HiddenFor(model => model.Hero)

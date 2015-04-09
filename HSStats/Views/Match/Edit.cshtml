@@ -1,25 +1,23 @@
 ﻿@model HSStats.Models.Match
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit match";
 }
 
-<h2>Edit</h2>
+<h2>Edit match</h2>
 
-
-@using (Html.BeginForm())
+<p class="validation-summary-errors">@ViewBag.Message</p>
+@using ( Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Match</h4>
-        <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.MatchID)
         @Html.HiddenFor(model => model.MatchTime)
         @Html.HiddenFor(model => model.ArenaID)
 
-        @if(Model.Mode != HSStats.Models.Modes.Arena)
+        @if ( Model.Mode != HSStats.Models.Modes.Arena )
         { 
             <div class="form-group">
                 @Html.LabelFor(model => model.Mode, new { @class = "control-label col-md-2" })
@@ -39,7 +37,7 @@
         }
         else
         {
-            @Html.HiddenFor(model=> model.Mode)
+            @Html.HiddenFor(model => model.Mode)
             @Html.HiddenFor(model => model.MyHero)
         }
 

@@ -1,10 +1,10 @@
 ﻿@model HSStats.Models.Match
 
 @{
-    ViewBag.Title = "AddMatch";
+    ViewBag.Title = "Create match";
 }
 
-<h2>AddMatch</h2>
+<h2>Create match</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -14,8 +14,6 @@
     @Html.HiddenFor(model => model.MyHero)
     
     <div class="form-horizontal">
-        <h4>Match</h4>
-        <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">

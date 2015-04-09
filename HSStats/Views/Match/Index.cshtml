@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<HSStats.Models.Match>
 
 @{
-    ViewBag.Title = "List of matches";
+    ViewBag.Title = "List of the matches";
 }
 
 <h2>List of matches</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create new match", "Create")
     @Html.Action("Search", "Match")
 </p>
 <table class="table">

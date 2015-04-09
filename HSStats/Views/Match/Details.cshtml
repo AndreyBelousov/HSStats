@@ -1,7 +1,7 @@
 ﻿@model HSStats.Models.Match
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Match details";
 }
 
 <h2>Match details</h2>
@@ -59,7 +59,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MatchID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MatchID, ReturnUrl = Request.Url.PathAndQuery }) |
     @Html.ActionLink("Back to List", "Index") |
     @if(Model.ArenaID != null)
     {
